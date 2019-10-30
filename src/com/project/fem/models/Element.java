@@ -12,7 +12,7 @@ public class Element {
     }
 
     public String toString() {
-        String result = "Element id: ";
+        String result = "Element id: \n";
         for (Node node :id) {
             result+= node.toString()+"\n";
         }
