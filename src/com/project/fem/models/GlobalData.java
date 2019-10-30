@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -12,6 +11,9 @@ import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
+import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
 @Setter
 @Getter
@@ -22,6 +24,7 @@ public class GlobalData {
     private double width;
     private int nH;
     private int nW;
+    private int n;
 
     public void getDataFromFile() {
         JSONParser parser = new JSONParser();
@@ -33,11 +36,13 @@ public class GlobalData {
             String w = (String) jsonObject.get("W");
             String nH = (String) jsonObject.get("nH");
             String nW = (String) jsonObject.get("nW");
+            String n = (String) jsonObject.get("n");
 
-            this.height = Double.parseDouble(h);
-            this.width = Double.parseDouble(w);
-            this.nH = Integer.parseInt(nH);
-            this.nW = Integer.parseInt(nW);
+            this.height = parseDouble(h);
+            this.width = parseDouble(w);
+            this.nH = parseInt(nH);
+            this.nW = parseInt(nW);
+            this.n = parseInt(n);
 
         } catch (FileNotFoundException e) {
             System.err.println("WRONG FILE PATH");
