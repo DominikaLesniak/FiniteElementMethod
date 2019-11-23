@@ -7,43 +7,37 @@ import java.util.List;
 
 public class GaussInterpolation {
     private final int N = 4;
+    private final int nodesNumber = 2;
 
-    public double[][] countKsiDerivatives(int nodesNumber) {
+    public double[][] countKsiDerivatives() {
         List<GaussInterpolationNode> interpolationNodes = GlobalConstants.getInterpolationNodes(nodesNumber);
         double[][] ksiDerivatives = new double[N][N];
         for (int i = 0; i < N; i++) {
-            int index = i < 2 ? 0 : 1;
-            ksiDerivatives[i][0] = GlobalConstants.shapeFunctionKsiDerivative1(interpolationNodes.get(index).getPc());
-            ksiDerivatives[i][1] = GlobalConstants.shapeFunctionKsiDerivative2(interpolationNodes.get(index).getPc());
-            ksiDerivatives[i][2] = GlobalConstants.shapeFunctionKsiDerivative3(interpolationNodes.get(index).getPc());
-            ksiDerivatives[i][3] = GlobalConstants.shapeFunctionKsiDerivative4(interpolationNodes.get(index).getPc());
+            for (int j = 0; j < 4; j++) {
+                ksiDerivatives[i][j] = GlobalConstants.shapeFunctionKsiDerivative(j + 1, interpolationNodes.get(i).getNi());
+            }
         }
         return ksiDerivatives;
     }
 
-    public double[][] countNiDerivatives(int nodesNumber) {
+    public double[][] countNiDerivatives() {
         List<GaussInterpolationNode> interpolationNodes = GlobalConstants.getInterpolationNodes(nodesNumber);
         double[][] niDerivatives = new double[N][N];
         for (int i = 0; i < N; i++) {
-            int index = i == 0 || i == 3 ? 0 : 1;
-            niDerivatives[i][0] = GlobalConstants.shapeFunctionNiDerivative1(interpolationNodes.get(index).getPc());
-            niDerivatives[i][1] = GlobalConstants.shapeFunctionNiDerivative2(interpolationNodes.get(index).getPc());
-            niDerivatives[i][2] = GlobalConstants.shapeFunctionNiDerivative3(interpolationNodes.get(index).getPc());
-            niDerivatives[i][3] = GlobalConstants.shapeFunctionNiDerivative4(interpolationNodes.get(index).getPc());
+            for (int j = 0; j < 4; j++) {
+                niDerivatives[i][j] = GlobalConstants.shapeFunctionNiDerivative(j + 1, interpolationNodes.get(i).getKsi());
+            }
         }
         return niDerivatives;
     }
 
-    public double[][] countShapeFunctionValues(int nodesNumber) {
+    public double[][] countShapeFunctionValues() {
         List<GaussInterpolationNode> interpolationNodes = GlobalConstants.getInterpolationNodes(nodesNumber);
         double[][] values = new double[N][N];
         for (int i = 0; i < N; i++) {
-            int indexKsi = i == 0 || i == 3 ? 0 : 1;
-            int indexNi = i < 2 ? 0 : 1;
-            values[i][0] = GlobalConstants.shapeFunction1(interpolationNodes.get(indexKsi).getPc(), interpolationNodes.get(indexNi).getPc());
-            values[i][1] = GlobalConstants.shapeFunction2(interpolationNodes.get(indexKsi).getPc(), interpolationNodes.get(indexNi).getPc());
-            values[i][2] = GlobalConstants.shapeFunction3(interpolationNodes.get(indexKsi).getPc(), interpolationNodes.get(indexNi).getPc());
-            values[i][3] = GlobalConstants.shapeFunction4(interpolationNodes.get(indexKsi).getPc(), interpolationNodes.get(indexNi).getPc());
+            for (int j = 0; j < 4; j++) {
+                values[i][j] = GlobalConstants.shapeFunction(j + 1, interpolationNodes.get(i).getKsi(), interpolationNodes.get(i).getNi());
+            }
         }
         return values;
     }
