@@ -9,6 +9,6 @@ import lombok.Setter;
 @Builder
 public class GaussInterpolationNode {
     private double ksi;
-    private double ni;
+    private double eta;
     private double wpc;
 }

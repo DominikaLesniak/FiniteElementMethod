@@ -14,7 +14,7 @@ public class GaussInterpolation {
     private final int nodesNumber = 2;
 
     public double[][] countJacobian(int nr, Element element) {
-        double[][] niDerivatives = countEtaDerivatives();
+        double[][] countEtaDerivatives = countEtaDerivatives();
         double[][] ksiDerivatives = countKsiDerivatives();
         Node node = element.getNode(nr);
 
@@ -22,22 +22,22 @@ public class GaussInterpolation {
         for (int i = 0; i < N; i++) {
             jacobian[0][0] += node.getX() * ksiDerivatives[nr][i];
             jacobian[0][1] += node.getY() * ksiDerivatives[nr][i];
-            jacobian[1][0] += node.getX() * niDerivatives[nr][i];
-            jacobian[1][1] += node.getY() * niDerivatives[nr][i];
+            jacobian[1][0] += node.getX() * countEtaDerivatives[nr][i];
+            jacobian[1][1] += node.getY() * countEtaDerivatives[nr][i];
         }
         return jacobian;
     }
 
     public double[][] countReverseJacobian(int nr, Element element) {
-        double[][] niDerivatives = countEtaDerivatives();
+        double[][] etaDerivatives = countEtaDerivatives();
         double[][] ksiDerivatives = countKsiDerivatives();
         Node node = element.getNode(nr);
 
         double[][] jacobian = initializeMatrix(2, 2);
         for (int i = 0; i < N; i++) {
-            jacobian[0][0] += node.getY() * niDerivatives[nr][i];
+            jacobian[0][0] += node.getY() * etaDerivatives[nr][i];
             jacobian[0][1] -= node.getY() * ksiDerivatives[nr][i];
-            jacobian[1][0] -= node.getX() * niDerivatives[nr][i];
+            jacobian[1][0] -= node.getX() * etaDerivatives[nr][i];
             jacobian[1][1] += node.getX() * ksiDerivatives[nr][i];
         }
         return jacobian;
@@ -52,7 +52,7 @@ public class GaussInterpolation {
         double[][] ksiDerivatives = new double[N][N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                ksiDerivatives[i][j] = GlobalFunctions.shapeFunctionKsiDerivative(j + 1, interpolationNodes.get(i).getNi());
+                ksiDerivatives[i][j] = GlobalFunctions.shapeFunctionKsiDerivative(j + 1, interpolationNodes.get(i).getEta());
             }
         }
         return ksiDerivatives;
@@ -60,13 +60,13 @@ public class GaussInterpolation {
 
     public double[][] countEtaDerivatives() {
         List<GaussInterpolationNode> interpolationNodes = GlobalFunctions.getInterpolationNodes(nodesNumber);
-        double[][] niDerivatives = new double[N][N];
+        double[][] etaDerivatives = new double[N][N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                niDerivatives[i][j] = GlobalFunctions.shapeFunctionEtaDerivative(j + 1, interpolationNodes.get(i).getKsi());
+                etaDerivatives[i][j] = GlobalFunctions.shapeFunctionEtaDerivative(j + 1, interpolationNodes.get(i).getKsi());
             }
         }
-        return niDerivatives;
+        return etaDerivatives;
     }
 
     public double[][] countShapeFunctionValues() {
@@ -74,7 +74,7 @@ public class GaussInterpolation {
         double[][] values = new double[N][N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < 4; j++) {
-                values[i][j] = GlobalFunctions.shapeFunction(j + 1, interpolationNodes.get(i).getKsi(), interpolationNodes.get(i).getNi());
+                values[i][j] = GlobalFunctions.shapeFunction(j + 1, interpolationNodes.get(i).getKsi(), interpolationNodes.get(i).getEta());
             }
         }
         return values;
