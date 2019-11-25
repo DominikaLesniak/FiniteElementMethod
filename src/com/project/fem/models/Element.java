@@ -11,6 +11,10 @@ public class Element {
         id = new Node[]{node1, node2, node3, node4};
     }
 
+    public Node getNode(int nr) {
+        return id[nr];
+    }
+
     public String toString() {
         String result = "Element id: \n";
         for (Node node :id) {

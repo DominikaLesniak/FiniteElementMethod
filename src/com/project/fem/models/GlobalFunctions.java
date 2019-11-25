@@ -7,7 +7,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 @Getter
-public class GlobalConstants {
+public class GlobalFunctions {
     private static final double N2_WEIGHT1 = 1.0;
     private static final double N2_NODE_VALUE1 = 0.57735;
 
@@ -46,7 +46,7 @@ public class GlobalConstants {
         }
     }
 
-    public static double shapeFunctionNiDerivative(int nr, double ksi) {
+    public static double shapeFunctionEtaDerivative(int nr, double ksi) {
         switch (nr) {
             case 1:
                 return -(1 - ksi) / 4;
@@ -103,4 +103,22 @@ public class GlobalConstants {
         }
     }
 
+    public static void printMatrix(double[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                System.out.print(matrix[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    public static double[][] initializeMatrix(int sizeX, int sizeY) {
+        double[][] matrix = new double[sizeY][sizeX];
+        for (int i = 0; i < sizeY; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                matrix[i][j] = 0.0;
+            }
+        }
+        return matrix;
+    }
 }
