@@ -67,22 +67,22 @@ public class GlobalFunctions {
                 return asList(GaussInterpolationNode.builder()
                                 .wpc(N2_WEIGHT1)
                                 .ksi(-N2_NODE_VALUE1)
-                                .ni(-N2_NODE_VALUE1)
+                                .eta(-N2_NODE_VALUE1)
                                 .build(),
                         GaussInterpolationNode.builder()
                                 .wpc(N2_WEIGHT1)
                                 .ksi(N2_NODE_VALUE1)
-                                .ni(-N2_NODE_VALUE1)
+                                .eta(-N2_NODE_VALUE1)
                                 .build(),
                         GaussInterpolationNode.builder()
                                 .wpc(N2_WEIGHT1)
                                 .ksi(N2_NODE_VALUE1)
-                                .ni(N2_NODE_VALUE1)
+                                .eta(N2_NODE_VALUE1)
                                 .build(),
                         GaussInterpolationNode.builder()
                                 .wpc(N2_WEIGHT1)
                                 .ksi(-N2_NODE_VALUE1)
-                                .ni(N2_NODE_VALUE1)
+                                .eta(N2_NODE_VALUE1)
                                 .build());
             case 3:
                 return asList(GaussInterpolationNode.builder()
@@ -105,7 +105,7 @@ public class GlobalFunctions {
 
     public static void printMatrix(double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix.length; j++) {
+            for (int j = 0; j < matrix[0].length; j++) {
                 System.out.print(matrix[i][j] + "\t");
             }
             System.out.println();
@@ -117,6 +117,17 @@ public class GlobalFunctions {
         for (int i = 0; i < sizeY; i++) {
             for (int j = 0; j < sizeX; j++) {
                 matrix[i][j] = 0.0;
+            }
+        }
+        return matrix;
+    }
+
+    public static double[][] VxV(double[] vector) {
+        double[][] matrix = GlobalFunctions.initializeMatrix(4, 4);
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                matrix[i][j] = (vector[i] * vector[j]);
             }
         }
         return matrix;

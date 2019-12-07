@@ -1,9 +1,9 @@
 package com.project.fem;
 
+import com.project.fem.dataFeatures.CMatrixGenerator;
 import com.project.fem.dataFeatures.FemGridGenerator;
-import com.project.fem.dataFeatures.GaussInterpolation;
-import com.project.fem.models.FemGrid;
-import com.project.fem.models.GlobalData;
+import com.project.fem.dataFeatures.HMatrixGenerator;
+import com.project.fem.models.*;
 
 public class Main {
 
@@ -15,9 +15,21 @@ public class Main {
         FemGrid femGrid = femGridGenerator.generateFemGrid(globalData);
         //femGrid.printElement(11);
 
-        GaussInterpolation gaussInterpolation = new GaussInterpolation();
-        double[][] ksiDerivatives = gaussInterpolation.countKsiDerivatives(globalData.getN());
-        double[][] niDerivatives = gaussInterpolation.countNiDerivatives(globalData.getN());
-        double[][] shapeFunctionValues = gaussInterpolation.countShapeFunctionValues(globalData.getN());
+        HMatrixGenerator hMatrixGenerator = new HMatrixGenerator();
+        CMatrixGenerator cMatrixGenerator = new CMatrixGenerator();
+
+        Node node1 = new Node(0, 0, true);
+        Node node2 = new Node(0.025, 0, true);
+        Node node3 = new Node(0.025, 0.025, false);
+        Node node4 = new Node(0, 0.025, false);
+        Element element = new Element(node1, node2, node3, node4);
+
+        double[][] H = hMatrixGenerator.countH(element, 30);
+        System.out.println("Matrix H:");
+        GlobalFunctions.printMatrix(H);
+
+        double[][] C = cMatrixGenerator.countC(element, 700, 7800);
+        System.out.println("Matrix C:");
+        GlobalFunctions.printMatrix(C);
     }
 }
