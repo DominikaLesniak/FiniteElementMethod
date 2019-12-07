@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class GaussInterpolationNode {
-    private double pc;
+    private double ksi;
+    private double eta;
     private double wpc;
 }
