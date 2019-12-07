@@ -16,10 +16,10 @@ public class GaussInterpolation {
     public double[][] countJacobian(int nr, Element element) {
         double[][] countEtaDerivatives = countEtaDerivatives();
         double[][] ksiDerivatives = countKsiDerivatives();
-        Node node = element.getNode(nr);
-
         double[][] jacobian = initializeMatrix(2, 2);
+
         for (int i = 0; i < N; i++) {
+            Node node = element.getNode(i);
             jacobian[0][0] += node.getX() * ksiDerivatives[nr][i];
             jacobian[0][1] += node.getY() * ksiDerivatives[nr][i];
             jacobian[1][0] += node.getX() * countEtaDerivatives[nr][i];
@@ -31,16 +31,16 @@ public class GaussInterpolation {
     public double[][] countReverseJacobian(int nr, Element element) {
         double[][] etaDerivatives = countEtaDerivatives();
         double[][] ksiDerivatives = countKsiDerivatives();
-        Node node = element.getNode(nr);
+        double[][] reverseJacobian = initializeMatrix(2, 2);
 
-        double[][] jacobian = initializeMatrix(2, 2);
         for (int i = 0; i < N; i++) {
-            jacobian[0][0] += node.getY() * etaDerivatives[nr][i];
-            jacobian[0][1] -= node.getY() * ksiDerivatives[nr][i];
-            jacobian[1][0] -= node.getX() * etaDerivatives[nr][i];
-            jacobian[1][1] += node.getX() * ksiDerivatives[nr][i];
+            Node node = element.getNode(i);
+            reverseJacobian[0][0] += node.getY() * etaDerivatives[nr][i];
+            reverseJacobian[0][1] -= node.getY() * ksiDerivatives[nr][i];
+            reverseJacobian[1][0] -= node.getX() * etaDerivatives[nr][i];
+            reverseJacobian[1][1] += node.getX() * ksiDerivatives[nr][i];
         }
-        return jacobian;
+        return reverseJacobian;
     }
 
     public double countDetJ(double[][] jacobian) {
