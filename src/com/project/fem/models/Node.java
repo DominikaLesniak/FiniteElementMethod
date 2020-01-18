@@ -8,15 +8,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Node {
+    private int id;
     private double temperature;
     private double x;
     private double y;
     private boolean BC;
 
-    public Node(double x, double y, boolean BC) {
+    public Node(double x, double y, boolean BC, int id, double temperature) {
         this.x = x;
         this.y = y;
         this.BC = BC;
+        this.id = id;
     }
 
     public String toString () {

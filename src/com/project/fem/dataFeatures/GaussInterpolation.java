@@ -79,4 +79,12 @@ public class GaussInterpolation {
         }
         return values;
     }
+
+    public double[] countShapeFunctionValuesForNode(GaussInterpolationNode node) {
+        double[] values = new double[4];
+        for (int i = 0; i < 4; i++) {
+            values[i] = GlobalFunctions.shapeFunction(i + 1, node.getKsi(), node.getEta());
+        }
+        return values;
+    }
 }

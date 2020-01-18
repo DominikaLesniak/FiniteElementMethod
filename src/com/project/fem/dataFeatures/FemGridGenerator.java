@@ -14,7 +14,11 @@ public class FemGridGenerator {
         int index = 0;
         for (int i = 0; i < globalData.getNW(); i++) {
             for (int j = 0; j < globalData.getNH(); j++) {
-                femGrid.getNodes()[index] = new Node(deltaX*i, deltaY*j, true);
+                double x = deltaX * i;
+                double y = deltaY * j;
+                boolean BC;
+                BC = (x == 0 || y == 0 || x == globalData.getWidth() || y == globalData.getHeight());
+                femGrid.getNodes()[index] = new Node(x, y, BC, index, globalData.getInitialTemperature());
                 index++;
             }
         }

@@ -1,6 +1,7 @@
 package com.project.fem.dataFeatures;
 
 import com.project.fem.models.Element;
+import com.project.fem.models.GlobalData;
 
 import static com.project.fem.models.GlobalFunctions.VxV;
 import static com.project.fem.models.GlobalFunctions.initializeMatrix;
@@ -13,7 +14,7 @@ public class CMatrixGenerator {
         gaussInterpolation = new GaussInterpolation();
     }
 
-    public double[][] countC(Element element, double c, double density) {
+    public double[][] countC(Element element, GlobalData globalData) {
         double[][] valuesN = gaussInterpolation.countShapeFunctionValues();
         double[][] C = initializeMatrix(N, N);
 
@@ -24,10 +25,11 @@ public class CMatrixGenerator {
 
             for (int j = 0; j < N; j++) {
                 for (int k = 0; k < N; k++) {
-                    C[j][k] += (matrixNi[j][k] * c * density * detJ);
+                    C[j][k] += (matrixNi[j][k] * globalData.getSpecificHeat() * globalData.getDensity() * detJ);
                 }
             }
         }
+        element.setMatrixC(C);
         return C;
     }
 }

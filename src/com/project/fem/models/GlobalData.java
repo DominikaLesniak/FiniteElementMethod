@@ -20,11 +20,19 @@ import static java.lang.Integer.parseInt;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GlobalData {
-    private double height;
-    private double width;
+    private double height; // [m]
+    private double width; // [m]
     private int nH;
     private int nW;
-    private int n;
+    private double conductivity; // [W/(m*°C)]
+    private double specificHeat; // [J/(kg*°C)]
+    private double density; // [kg/m^3]
+    private double alpha; // [W/(m^2*K)]
+    private double initialTemperature; // [°C]
+    private double ambientTemperature; // [°C]
+    private double simulationTime; // [s]
+    private double simulationStepTime; // [s]
+
 
     public void getDataFromFile() {
         JSONParser parser = new JSONParser();
@@ -36,13 +44,27 @@ public class GlobalData {
             String w = (String) jsonObject.get("W");
             String nH = (String) jsonObject.get("nH");
             String nW = (String) jsonObject.get("nW");
-            String n = (String) jsonObject.get("n");
+            String K = (String) jsonObject.get("K");
+            String c = (String) jsonObject.get("c");
+            String ro = (String) jsonObject.get("ro");
+            String alpha = (String) jsonObject.get("alpha");
+            String initialTemperature = (String) jsonObject.get("initialTemperature");
+            String ambientTemperature = (String) jsonObject.get("ambientTemperature");
+            String simulationTime = (String) jsonObject.get("simulationTime");
+            String simulationStepTime = (String) jsonObject.get("simulationStepTime");
 
             this.height = parseDouble(h);
             this.width = parseDouble(w);
             this.nH = parseInt(nH);
             this.nW = parseInt(nW);
-            this.n = parseInt(n);
+            this.conductivity = parseDouble(K);
+            this.specificHeat = parseDouble(c);
+            this.density = parseDouble(ro);
+            this.alpha = parseDouble(alpha);
+            this.initialTemperature = parseDouble(initialTemperature);
+            this.ambientTemperature = parseDouble(ambientTemperature);
+            this.simulationTime = parseDouble(simulationTime);
+            this.simulationStepTime = parseDouble(simulationStepTime);
 
         } catch (FileNotFoundException e) {
             System.err.println("WRONG FILE PATH");

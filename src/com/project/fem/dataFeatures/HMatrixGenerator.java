@@ -1,6 +1,7 @@
 package com.project.fem.dataFeatures;
 
 import com.project.fem.models.Element;
+import com.project.fem.models.GlobalData;
 import com.project.fem.models.GlobalFunctions;
 
 import static com.project.fem.models.GlobalFunctions.VxV;
@@ -13,7 +14,7 @@ public class HMatrixGenerator {
         gaussInterpolation = new GaussInterpolation();
     }
 
-    public double[][] countH(Element element, double K) {
+    public double[][] countH(Element element, GlobalData globalData) {
         double[][] ksiDerivatives = gaussInterpolation.countKsiDerivatives();
         double[][] etaDerivatives = gaussInterpolation.countEtaDerivatives();
         double[][] H = GlobalFunctions.initializeMatrix(N, N);
@@ -34,10 +35,11 @@ public class HMatrixGenerator {
 
             for (int j = 0; j < N; j++) {
                 for (int k = 0; k < N; k++) {
-                    H[j][k] += ((xDerivMatrix[j][k] + yDerivMatrix[j][k]) * K * detJ);
+                    H[j][k] += ((xDerivMatrix[j][k] + yDerivMatrix[j][k]) * globalData.getConductivity() * detJ);
                 }
             }
         }
+        element.setMatrixH(H);
         return H;
     }
 }
