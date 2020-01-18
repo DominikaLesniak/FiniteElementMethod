@@ -19,6 +19,7 @@ public class Node {
         this.y = y;
         this.BC = BC;
         this.id = id;
+        this.temperature = temperature;
     }
 
     public String toString () {

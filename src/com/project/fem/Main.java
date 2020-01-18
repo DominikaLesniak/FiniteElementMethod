@@ -15,6 +15,7 @@ public class Main {
         CMatrixGenerator cMatrixGenerator = new CMatrixGenerator();
         HbcGenerator hbcGenerator = new HbcGenerator();
         Aggregate aggregate = new Aggregate();
+        MatrixOperations matrixOperations = new MatrixOperations();
 
         globalData.getDataFromFile();
         FemGrid femGrid = femGridGenerator.generateFemGrid(globalData);
@@ -34,6 +35,7 @@ public class Main {
         System.out.println("Matrix C:");
         GlobalFunctions.printMatrix(femGrid.getGlobalCMatrix());
 
+        matrixOperations.solveEquation(femGrid, globalData);
 
 /*
         Node node1 = new Node(0, 0, true);

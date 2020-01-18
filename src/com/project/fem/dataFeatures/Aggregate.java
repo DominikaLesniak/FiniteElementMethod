@@ -21,7 +21,7 @@ public class Aggregate {
             int[] id = element.getNodesId();
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    globalHMatrix[id[i]][id[j]] += element.getMatrixH()[i][j];// + element.getMatrixHbc()[i][j];
+                    globalHMatrix[id[i]][id[j]] += element.getMatrixH()[i][j] + element.getMatrixHbc()[i][j];
                     globalCMatrix[id[i]][id[j]] += element.getMatrixC()[i][j];
                 }
                 globalPVector[id[i]] += element.getVectorP()[i];
@@ -30,5 +30,7 @@ public class Aggregate {
         femGrid.setGlobalHMatrix(globalHMatrix);
         femGrid.setGlobalCMatrix(globalCMatrix);
         femGrid.setGlobalPVector(globalPVector);
+
+
     }
 }
