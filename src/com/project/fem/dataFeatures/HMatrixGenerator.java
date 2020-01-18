@@ -9,12 +9,14 @@ import static com.project.fem.models.GlobalFunctions.VxV;
 public class HMatrixGenerator {
     private final int N = 4;
     private GaussInterpolation gaussInterpolation;
+    private GlobalData globalData;
 
-    public HMatrixGenerator() {
+    public HMatrixGenerator(GlobalData globalData) {
         gaussInterpolation = new GaussInterpolation();
+        this.globalData = globalData;
     }
 
-    public double[][] countH(Element element, GlobalData globalData) {
+    public double[][] countH(Element element) {
         double[][] ksiDerivatives = gaussInterpolation.countKsiDerivatives();
         double[][] etaDerivatives = gaussInterpolation.countEtaDerivatives();
         double[][] H = GlobalFunctions.initializeMatrix(N, N);

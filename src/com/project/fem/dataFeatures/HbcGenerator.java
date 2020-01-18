@@ -7,12 +7,14 @@ import static com.project.fem.models.GlobalFunctions.VxV;
 public class HbcGenerator {
     private final static int N = 4;
     private GaussInterpolation gaussInterpolation;
+    private GlobalData globalData;
 
-    public HbcGenerator() {
+    public HbcGenerator(GlobalData globalData) {
         gaussInterpolation = new GaussInterpolation();
+        this.globalData = globalData;
     }
 
-    public double[][] generateHbc(Element element, GlobalData globalData) {
+    public double[][] generateHbc(Element element) {
         ElementSurfacePoints surfacePoints = new ElementSurfacePoints();
         double[][] hbc = GlobalFunctions.initializeMatrix(4, 4);
         double[] P = {0, 0, 0, 0};

@@ -6,7 +6,13 @@ import com.project.fem.models.GlobalData;
 import com.project.fem.models.Node;
 
 public class FemGridGenerator {
-    public FemGrid generateFemGrid(GlobalData globalData) {
+    private GlobalData globalData;
+
+    public FemGridGenerator(GlobalData globalData) {
+        this.globalData = globalData;
+    }
+
+    public FemGrid generateFemGrid() {
         FemGrid femGrid = new FemGrid(globalData.getNW(), globalData.getNH());
 
         double deltaX = globalData.getWidth() / (globalData.getNW()-1);

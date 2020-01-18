@@ -34,10 +34,10 @@ public class GlobalData {
     private double simulationStepTime; // [s]
 
 
-    public void getDataFromFile() {
+    public void getDataFromFile(String filePath) {
         JSONParser parser = new JSONParser();
         try {
-            Object object = parser.parse(new FileReader(System.getProperty("user.dir")+"\\src\\com\\project\\fem\\resources\\data.txt"));
+            Object object = parser.parse(new FileReader(filePath));
             JSONObject jsonObject = (JSONObject) object;
 
             String h = (String) jsonObject.get("H");

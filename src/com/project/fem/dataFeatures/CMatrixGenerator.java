@@ -9,12 +9,14 @@ import static com.project.fem.models.GlobalFunctions.initializeMatrix;
 public class CMatrixGenerator {
     private final int N = 4;
     private GaussInterpolation gaussInterpolation;
+    private GlobalData globalData;
 
-    public CMatrixGenerator() {
+    public CMatrixGenerator(GlobalData globalData) {
         gaussInterpolation = new GaussInterpolation();
+        this.globalData = globalData;
     }
 
-    public double[][] countC(Element element, GlobalData globalData) {
+    public double[][] countC(Element element) {
         double[][] valuesN = gaussInterpolation.countShapeFunctionValues();
         double[][] C = initializeMatrix(N, N);
 

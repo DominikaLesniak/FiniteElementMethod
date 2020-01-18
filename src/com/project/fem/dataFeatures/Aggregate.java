@@ -14,7 +14,7 @@ public class Aggregate {
 
         double[][] globalHMatrix = initializeMatrix(femGrid.getNodes().length);
         double[][] globalCMatrix = initializeMatrix(femGrid.getNodes().length);
-        double[] globalPVector = new double[16];
+        double[] globalPVector = new double[femGrid.getNodes().length];
         Arrays.fill(globalPVector, 0);
 
         for (Element element : femGrid.getElements()) {

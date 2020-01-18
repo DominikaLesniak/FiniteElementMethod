@@ -1,42 +1,13 @@
 package com.project.fem;
 
-import com.project.fem.dataFeatures.*;
-import com.project.fem.models.Element;
-import com.project.fem.models.FemGrid;
-import com.project.fem.models.GlobalData;
-import com.project.fem.models.GlobalFunctions;
+import com.project.fem.FEMCalculations.Simulation;
+import com.project.fem.models.supportModels.DataSource;
 
 public class Main {
 
     public static void main(String[] args) {
-        GlobalData globalData = new GlobalData();
-        FemGridGenerator femGridGenerator = new FemGridGenerator();
-        HMatrixGenerator hMatrixGenerator = new HMatrixGenerator();
-        CMatrixGenerator cMatrixGenerator = new CMatrixGenerator();
-        HbcGenerator hbcGenerator = new HbcGenerator();
-        Aggregate aggregate = new Aggregate();
-        MatrixOperations matrixOperations = new MatrixOperations();
-
-        globalData.getDataFromFile();
-        FemGrid femGrid = femGridGenerator.generateFemGrid(globalData);
-        //femGrid.printElement(11);
-
-        for (int i = 0; i < femGrid.getElements().length; i++) {
-            Element element = femGrid.getElement(i);
-            hMatrixGenerator.countH(element, globalData);
-            cMatrixGenerator.countC(element, globalData);
-            hbcGenerator.generateHbc(element, globalData);
-        }
-        aggregate.aggregateMatrixes(femGrid);
-
-        System.out.println("Matrix H:");
-        GlobalFunctions.printMatrix(femGrid.getGlobalHMatrix());
-
-        System.out.println("Matrix C:");
-        GlobalFunctions.printMatrix(femGrid.getGlobalCMatrix());
-
-        matrixOperations.solveEquation(femGrid, globalData);
-
+        Simulation simulation = new Simulation(DataSource.TEST_CASE1);
+        simulation.runSimulation();
 /*
         Node node1 = new Node(0, 0, true);
         Node node2 = new Node(0.025, 0, true);
