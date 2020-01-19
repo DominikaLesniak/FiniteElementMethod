@@ -1,4 +1,4 @@
-package com.project.fem.models;
+package com.project.fem.models.supportModels;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

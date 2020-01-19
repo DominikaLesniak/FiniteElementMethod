@@ -37,11 +37,15 @@ public class Simulation {
 
         calculateElementMatrixes();
         aggregate.aggregateMatrixes(femGrid);
-        Matrix finalMatrixH = matrixOperations.calculateFinalMatrixH(femGrid);
+        //femGrid.printGlobalMatrixes();
+        Matrix inversedFinalMatrixH = matrixOperations.calculateInversedFinalMatrixH(femGrid);
 
+        int i = 1;
         while (currentTime < simulationTime) {
-            matrixOperations.solveEquation(femGrid, finalMatrixH);
             currentTime += simulationStepTime;
+            System.out.printf("Step %2d: elapsed time = %5ss; ", i, currentTime);
+            matrixOperations.solveEquation(femGrid, inversedFinalMatrixH);
+            i++;
         }
     }
 

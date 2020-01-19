@@ -1,11 +1,10 @@
-package com.project.fem.models;
+package com.project.fem.models.supportModels;
 
 import lombok.Getter;
 
-import static com.project.fem.models.GlobalFunctions.N2_NODE_VALUE;
-
 @Getter
 public class ElementSurfacePoints {
+    private final double N2_NODE_VALUE = 0.57735;
     private GaussInterpolationNode[][] walls;
 
     public ElementSurfacePoints() {

@@ -5,7 +5,7 @@ import com.project.fem.models.FemGrid;
 
 import java.util.Arrays;
 
-import static com.project.fem.models.GlobalFunctions.initializeMatrix;
+import static com.project.fem.dataFeatures.GlobalFunctions.initializeMatrix;
 
 public class Aggregate {
     private static int N = 4;

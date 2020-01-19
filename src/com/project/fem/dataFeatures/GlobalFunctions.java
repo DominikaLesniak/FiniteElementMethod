@@ -1,5 +1,6 @@
-package com.project.fem.models;
+package com.project.fem.dataFeatures;
 
+import com.project.fem.models.supportModels.GaussInterpolationNode;
 import lombok.Getter;
 
 import java.text.DecimalFormat;
@@ -114,6 +115,16 @@ public class GlobalFunctions {
             }
             System.out.println();
         }
+    }
+
+    public static void printVector(double[] vector) {
+        DecimalFormat df = new DecimalFormat("#.#####");
+
+        for (int i = 0; i < vector.length; i++) {
+            double singleResult = vector[i];
+            System.out.printf("%8s \t", df.format(singleResult));
+        }
+        System.out.println();
     }
 
     public static double[][] initializeMatrix(int size) {

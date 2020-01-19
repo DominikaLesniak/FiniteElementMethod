@@ -7,6 +7,7 @@ import org.la4j.Matrix;
 import org.la4j.Vector;
 import org.la4j.inversion.GaussJordanInverter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static java.util.Arrays.stream;
@@ -20,25 +21,30 @@ public class MatrixOperations {
     }
 
     public void solveEquation(FemGrid femGrid) {
-        Matrix finalMatrixH = calculateFinalMatrixH(femGrid);
+        Matrix finalMatrixH = calculateInversedFinalMatrixH(femGrid);
         solveEquation(femGrid, finalMatrixH);
     }
 
-    public void solveEquation(FemGrid femGrid, Matrix finalMatrixH) {
+    public void solveEquation(FemGrid femGrid, Matrix inverseMatrixH) {
         Vector finalVectorP = calculateFinalVectorP(femGrid);
 
-        Matrix inverseMatrixH = new GaussJordanInverter(finalMatrixH).inverse();
+        //Matrix inverseMatrixH = new GaussJordanInverter(finalMatrixH).inverse();
         Vector newTemperatures = inverseMatrixH.multiply(finalVectorP);
 
         for (int i = 0; i < femGrid.getNodes().length; i++) {
             femGrid.getNodes()[i].setTemperature(newTemperatures.get(i));
         }
-        System.out.printf("Step min temp: %6f, max temp: %6f \n", newTemperatures.min(), newTemperatures.max());
+        DecimalFormat df = new DecimalFormat("#.###");
+        double minTemp = newTemperatures.min();
+        double maxTemp = newTemperatures.max();
+        System.out.printf("min temp: %6s°C; max temp: %6s°C \n", df.format(minTemp), df.format(maxTemp));
     }
 
-    public Matrix calculateFinalMatrixH(FemGrid femGrid) {
+    public Matrix calculateInversedFinalMatrixH(FemGrid femGrid) {
         Matrix matrixC = Matrix.from2DArray(femGrid.getGlobalCMatrix()).divide(globalData.getSimulationStepTime());
-        return Matrix.from2DArray(femGrid.getGlobalHMatrix()).add(matrixC);
+        Matrix finalMatrixH = Matrix.from2DArray(femGrid.getGlobalHMatrix()).add(matrixC);
+        Matrix inverseMatrixH = new GaussJordanInverter(finalMatrixH).inverse();
+        return inverseMatrixH;
     }
 
     private Vector calculateFinalVectorP(FemGrid femGrid) {

@@ -1,8 +1,12 @@
 package com.project.fem.dataFeatures;
 
-import com.project.fem.models.*;
+import com.project.fem.models.Element;
+import com.project.fem.models.GlobalData;
+import com.project.fem.models.Node;
+import com.project.fem.models.supportModels.ElementSurfacePoints;
+import com.project.fem.models.supportModels.GaussInterpolationNode;
 
-import static com.project.fem.models.GlobalFunctions.VxV;
+import static com.project.fem.dataFeatures.GlobalFunctions.VxV;
 
 public class HbcGenerator {
     private final static int N = 4;

@@ -3,6 +3,9 @@ package com.project.fem.models;
 import lombok.Getter;
 import lombok.Setter;
 
+import static com.project.fem.dataFeatures.GlobalFunctions.printMatrix;
+import static com.project.fem.dataFeatures.GlobalFunctions.printVector;
+
 @Getter
 @Setter
 public class FemGrid {
@@ -27,5 +30,14 @@ public class FemGrid {
         } else {
             System.out.println(elements[elementIndex].toString());
         }
+    }
+
+    public void printGlobalMatrixes() {
+        System.out.println("Matrix [H] = [H] + [Hbc]");
+        printMatrix(globalHMatrix);
+        System.out.println("\nMatrix [C]");
+        printMatrix(globalCMatrix);
+        System.out.println("\nVector [P]");
+        printVector(globalPVector);
     }
 }

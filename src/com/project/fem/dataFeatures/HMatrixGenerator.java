@@ -2,9 +2,8 @@ package com.project.fem.dataFeatures;
 
 import com.project.fem.models.Element;
 import com.project.fem.models.GlobalData;
-import com.project.fem.models.GlobalFunctions;
 
-import static com.project.fem.models.GlobalFunctions.VxV;
+import static com.project.fem.dataFeatures.GlobalFunctions.VxV;
 
 public class HMatrixGenerator {
     private final int N = 4;
@@ -17,8 +16,8 @@ public class HMatrixGenerator {
     }
 
     public double[][] countH(Element element) {
-        double[][] ksiDerivatives = gaussInterpolation.countKsiDerivatives();
-        double[][] etaDerivatives = gaussInterpolation.countEtaDerivatives();
+        double[][] ksiDerivatives = gaussInterpolation.getKsiDerivativesValues();
+        double[][] etaDerivatives = gaussInterpolation.getEtaDerivativesValues();
         double[][] H = GlobalFunctions.initializeMatrix(N, N);
 
         for (int i = 0; i < N; i++) {

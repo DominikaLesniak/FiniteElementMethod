@@ -3,8 +3,8 @@ package com.project.fem.dataFeatures;
 import com.project.fem.models.Element;
 import com.project.fem.models.GlobalData;
 
-import static com.project.fem.models.GlobalFunctions.VxV;
-import static com.project.fem.models.GlobalFunctions.initializeMatrix;
+import static com.project.fem.dataFeatures.GlobalFunctions.VxV;
+import static com.project.fem.dataFeatures.GlobalFunctions.initializeMatrix;
 
 public class CMatrixGenerator {
     private final int N = 4;
@@ -17,7 +17,7 @@ public class CMatrixGenerator {
     }
 
     public double[][] countC(Element element) {
-        double[][] valuesN = gaussInterpolation.countShapeFunctionValues();
+        double[][] valuesN = gaussInterpolation.getShapeFunctionsValues();
         double[][] C = initializeMatrix(N, N);
 
         for (int i = 0; i < N; i++) {
